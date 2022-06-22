@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.learning.entity.StudentDetails;
 import com.learning.entity.StudentEntity;
 
 @Configuration
@@ -15,7 +16,9 @@ public class AppConfiguration {
 	@Bean
 	public SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = new org.hibernate.cfg.Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(StudentEntity.class).buildSessionFactory();
+				.addAnnotatedClass(StudentEntity.class)
+				.addAnnotatedClass(StudentDetails.class)
+				.buildSessionFactory();
 		return sessionFactory;
 	}
 

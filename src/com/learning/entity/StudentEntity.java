@@ -1,11 +1,13 @@
 package com.learning.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +17,7 @@ public class StudentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "std_id")
-	private int id;   //// 
+	private int id; ////
 
 	@Column(name = "name")
 	private String name; // -----> NAME
@@ -28,6 +30,12 @@ public class StudentEntity {
 
 	@Column(name = "DATE_OF_BIRTH")
 	private String dateOfBirth; // ---> ("DATE_OF_BIRTH")
+
+	// private int student_detail_id;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "student_detail_id")
+	private StudentDetails studentDetails;
 
 	public StudentEntity() {
 	}
@@ -79,10 +87,18 @@ public class StudentEntity {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public StudentDetails getStudentDetails() {
+		return studentDetails;
+	}
+
+	public void setStudentDetails(StudentDetails studentDetails) {
+		this.studentDetails = studentDetails;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentEntity [id=" + id + ", name=" + name + ", branch=" + branch + ", yop=" + yop + ", dateOfBirth="
-				+ dateOfBirth + "]";
+				+ dateOfBirth + ", studentDetails=" + studentDetails + "]";
 	}
-
+	
 }
