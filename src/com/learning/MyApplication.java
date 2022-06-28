@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.learning.config.AppConfiguration;
+import com.learning.entity.Course;
+import com.learning.entity.ProjectModules;
 import com.learning.entity.StudentEntity;
 
 public class MyApplication {
@@ -86,12 +88,36 @@ public class MyApplication {
 
 		// OneToOne fetch demo
 		
-		StudentEntity s7 = session.get(StudentEntity.class, 7);
+		/*
+		 * StudentEntity s7 = session.get(StudentEntity.class, 7);
+		 * 
+		 * System.out.println("StudentEntity fetched");
+		 * 
+		 * System.out.println(s7.getStudentDetails());
+		 */
 
-		System.out.println("StudentEntity fetched");
-
-		System.out.println(s7.getStudentDetails());
-
+		///Many to Many relation create
+		StudentEntity s1 = session.get(StudentEntity.class, 6);
+		
+		Course c1 = new Course("ENGG_MECH", 9);
+		Course c2 = new Course("CPP", 8);
+		Course c3 = new Course("ED", 7);
+		Course c4 = new Course("CHEM", 9);
+		
+		s1.getCourses().add(c1);
+		s1.getCourses().add(c2);
+		s1.getCourses().add(c3);
+		session.persist(s1);
+		System.out.println("Student s1 saved in DB");
+		
+		StudentEntity s2 = session.get(StudentEntity.class, 3);
+		s2.getCourses().add(c3);
+		s2.getCourses().add(c4);
+		session.persist(s2);
+		
+		//Create a new student with student details and projects ateleast (5) 
+		//and ProdjectModules(for each atleast 2) and courses and save it
+		/*Assignment*/
 		// Commit the transaction
 		session.getTransaction().commit();
 

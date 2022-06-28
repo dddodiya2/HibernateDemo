@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.learning.entity.Course;
 import com.learning.entity.Project;
+import com.learning.entity.ProjectModules;
 import com.learning.entity.StudentDetails;
 import com.learning.entity.StudentEntity;
 
@@ -20,6 +22,8 @@ public class AppConfiguration {
 				.addAnnotatedClass(StudentEntity.class)
 				.addAnnotatedClass(StudentDetails.class)
 				.addAnnotatedClass(Project.class)
+				.addAnnotatedClass(ProjectModules.class)
+				.addAnnotatedClass(Course.class)
 				.buildSessionFactory();
 		return sessionFactory;
 	}

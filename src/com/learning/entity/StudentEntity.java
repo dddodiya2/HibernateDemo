@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -46,6 +48,23 @@ public class StudentEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	private List<Project> projects;
+
+	
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+	@JoinTable(name = "STUDENT_COURSE_DETAIL",
+	joinColumns = @JoinColumn(name="student_id"),
+	inverseJoinColumns = @JoinColumn(name="course_id")
+	)
+	private List<Course> courses;
+	
+	
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 
 	public StudentEntity() {
 	}

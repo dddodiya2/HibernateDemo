@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +30,12 @@ public class Project {
 	@JoinColumn(name = "student_id")
 	private StudentEntity student;
 
+	
+	/*
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="project_id")
+	*/	
+	
 	public Project() {
 	}
 	
