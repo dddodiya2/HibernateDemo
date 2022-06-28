@@ -1,12 +1,16 @@
 package com.learning.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,9 +37,15 @@ public class StudentEntity {
 
 	// private int student_detail_id;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	///// "id" column of StudentDetails by default why ? because id is annotated
+	///// with @Id in that class
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_detail_id")
 	private StudentDetails studentDetails;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "student", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	private List<Project> projects;
 
 	public StudentEntity() {
 	}
@@ -95,10 +105,21 @@ public class StudentEntity {
 		this.studentDetails = studentDetails;
 	}
 
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}
+
 	@Override
 	public String toString() {
 		return "StudentEntity [id=" + id + ", name=" + name + ", branch=" + branch + ", yop=" + yop + ", dateOfBirth="
-				+ dateOfBirth + ", studentDetails=" + studentDetails + "]";
+				+ dateOfBirth + ", studentDetails=" + studentDetails.toString() + 
+				"\nProjects" + projects + 
+				"\n]";
 	}
+	
 	
 }

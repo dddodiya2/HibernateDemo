@@ -227,3 +227,115 @@ By default no operations are cascade.
 
 @OneToOne(cascade=CascadeType.ALL)
 @JoinColumn(name="....id")
+Creating unidirectional one to one mapping.
+
+----------------------------------------------------------------------------------------------
+drop table STUDENT_DETAILS;
+drop table STUDENT;
+
+create table STUDENT_DETAILS 
+	(id integer auto_increment not null,
+		mail varchar(255),
+        contact varchar(10),
+        primary key (id)
+        );
+
+create table STUDENT
+	(std_id Integer  AUTO_INCREMENT NOT NULL,
+		Name VARCHAR(20),
+		Branch VARCHAR(10),
+		YOP integer,
+        DATE_OF_BIRTH VARCHAR(20),
+        student_detail_id integer,
+		primary key (std_id),
+        Constraint  foreign key (student_detail_id) 
+        references STUDENT_DETAILS (id)        
+        on delete no action on update no action
+ 	);   
+        
+select * from  STUDENT_DETAILS;
+
+select * from  STUDENT;
+-------------------------------------------------------------------------------------
+Unidirectional mapping (Student ---> StudentDetails)
+
+class Student{
+.
+.
+.
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name = "student_detail_id")
+private StudentDetails studentDetails;
+
+}
+
+
+Creating Bidirectional one to one mapping (Student <---> StudentDetails and )
+
+class StudentDetails{.
+.
+.
+.
+@OneToOne(mappedby="studentDetails" , cascade = CascadeType.ALL)  //here studentDetails is property from StudentEntity class.
+private StudentEntity student;
+.
+.
+.
+.
+}
+
+
+-------------------------------------------------------------------------------------
+
+One-To-Many Relationship :-
+
+One Student having multiple projects
+
+Project table setup as below
+
+create table Project (
+	id integer not null auto_increment,
+	title varchar(255) DEFAULT NULL,
+	student_id integer default null;
+	
+	primary key ('id'),
+	unique key title_unique (title),
+	
+)
+
+
+
+
+Code changes 
+@Entity
+class Project{
+.
+.
+.
+.
+@ManyToOne(cascade)
+@JoinColumn(name="student_id")
+private StudentEntity student;
+
+
+}
+
+//changes in StudentEntity class
+@Entity
+class StudentEntity{
+
+@OneToMany(mappedby="student", cascade={ ... ,.. })
+private List<Project> projects;
+.
+.
+//convenience method for bi-directional mapping
+public void add(Project tempProject){
+	if(projects ==null){
+		projects = new ArrayList<>();
+	}
+	projects.add(tempProject);
+	tempProject.setStudent(this);
+}
+.
+.
+}

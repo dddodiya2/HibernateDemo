@@ -1,10 +1,12 @@
 package com.learning.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,12 +24,25 @@ public class StudentDetails {
 	@Column
 	private String contact;
 
+	@OneToOne(mappedBy = "studentDetails", cascade = CascadeType.ALL)
+	private StudentEntity student;
+	
 	public StudentDetails(String mail, String contact) {
 		this.mail = mail;
 		this.contact = contact;
 	}
 
 	public StudentDetails() {
+	}
+
+
+
+	public StudentEntity getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentEntity student) {
+		this.student = student;
 	}
 
 	public int getId() {
@@ -58,5 +73,5 @@ public class StudentDetails {
 	public String toString() {
 		return "StudentDetails [id=" + id + ", mail=" + mail + ", contact=" + contact + "]";
 	}
-
+	
 }
