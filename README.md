@@ -347,15 +347,3 @@ OneToMany Unidirectional mapping - assignment
 
 ---------------------------------------------------------------------------------------
 ManyToMany Mapping using @JoinTable annotation :-
-
-
-CREATE TABLE `employee_project` (
-  `employee_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  PRIMARY KEY (`employee_id`,`project_id`),
-  KEY `project_id` (`project_id`),
-  CONSTRAINT `employee_project_ibfk_1` 
-   FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
-  CONSTRAINT `employee_project_ibfk_2` 
-   FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`)
-)
